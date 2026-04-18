@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Your Trip | Travel Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<nav class="glass-nav">
+  <h2 class="logo"><i class="fas fa-globe-americas"></i> Travel Explorer</h2>
+  <div class="nav-links">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="places.html"><i class="fas fa-map-marker-alt"></i> Places</a>
+    <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="booking.html" class="active"><i class="fas fa-ticket-alt"></i> Booking</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>Book Your <span class="gradient-text">Adventure</span></h1>
+  <p>Plan your dream vacation with us</p>
+</section>
+
+<div class="booking-container">
+  <div class="booking-card">
+    <div class="booking-icon">
+      <i class="fas fa-plane-departure"></i>
+    </div>
+    <h2>Travel Package Booking</h2>
+    <form id="bookingForm" onsubmit="event.preventDefault(); bookTrip();">
+      <select id="destination" required>
+        <option value="">Select Destination</option>
+        <option value="Maldives">Maldives - Paradise Islands</option>
+        <option value="Paris">Paris - City of Love</option>
+        <option value="Dubai">Dubai - Luxury Experience</option>
+        <option value="Bali">Bali - Tropical Heaven</option>
+        <option value="Switzerland">Switzerland - Alpine Beauty</option>
+        <option value="Japan">Japan - Land of the Rising Sun</option>
+      </select>
+      <input type="date" id="travelDate" required>
+      <input type="number" id="travelers" placeholder="Number of Travelers" min="1" required>
+      <select id="packageType">
+        <option value="standard">Standard Package - $999</option>
+        <option value="deluxe">Deluxe Package - $1499</option>
+        <option value="premium">Premium Package - $1999</option>
+      </select>
+      <input type="text" id="fullName" placeholder="Full Name" required>
+      <input type="email" id="emailBooking" placeholder="Email Address" required>
+      <input type="tel" id="phone" placeholder="Phone Number" required>
+      <button type="submit" class="btn-primary"><i class="fas fa-check-circle"></i> Confirm Booking</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3><i class="fas fa-globe-americas"></i> Travel Explorer</h3>
+      <p>Making travel dreams come true since 2025</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="places.html">Destinations</a>
+      <a href="gallery.html">Gallery</a>
+    </div>
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Travel Explorer | All rights reserved</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

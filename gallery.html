@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | Travel Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Additional gallery styles */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .gallery-item {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 40px rgba(0,0,0,0.2);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-item .caption {
+      padding: 1rem;
+      text-align: center;
+      color: #333;
+      font-weight: 600;
+      background: white;
+    }
+
+    .gallery-item .location {
+      font-size: 0.85rem;
+      color: #FF6B6B;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .gallery-item .overlay-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0,0,0,0.6);
+      padding: 8px 12px;
+      border-radius: 30px;
+      color: white;
+      font-size: 0.8rem;
+      backdrop-filter: blur(5px);
+    }
+
+    /* Lightbox Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+      box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    }
+
+    .lightbox .close-lightbox {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    .lightbox .caption-lightbox {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="glass-nav">
+  <h2 class="logo"><i class="fas fa-globe-americas"></i> Travel Explorer</h2>
+  <div class="nav-links">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="places.html"><i class="fas fa-map-marker-alt"></i> Places</a>
+    <a href="gallery.html" class="active"><i class="fas fa-images"></i> Gallery</a>
+    <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+    <a href="booking.html"><i class="fas fa-ticket-alt"></i> Booking</a>
+  </div>
+</nav>
+
+<section class="page-header">
+  <h1>Travel <span class="gradient-text">Gallery</span></h1>
+  <p>Beautiful moments captured around the world</p>
+</section>
+
+<div class="gallery-container">
+  <div class="gallery-grid" id="galleryGrid"></div>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <span class="close-lightbox">&times;</span>
+  <img id="lightboxImg" src="" alt="">
+  <div id="lightboxCaption" class="caption-lightbox"></div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3><i class="fas fa-globe-americas"></i> Travel Explorer</h3>
+      <p>Making travel dreams come true since 2025</p>
+    </div>
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="places.html">Destinations</a>
+      <a href="gallery.html">Gallery</a>
+    </div>
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Travel Explorer | All rights reserved</p>
+  </div>
+</footer>
+
+<script>
+  // Gallery Images Data - ALL WORKING IMAGES (using reliable Pexels URLs)
+  const galleryImages = [
+    {
+      url: "https://images.pexels.com/photos/2614818/pexels-photo-2614818.jpeg?w=800&h=500&auto=compress",
+      title: "Maldives Paradise",
+      location: "Maldives, Indian Ocean"
+    },
+    {
+      url: "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?w=800&h=500&auto=compress",
+      title: "Eiffel Tower Magic",
+      location: "Paris, France"
+    },
+    {
+      url: "https://images.pexels.com/photos/1268855/pexels-photo-1268855.jpeg?w=800&h=500&auto=compress",
+      title: "Burj Khalifa",
+      location: "Dubai, UAE"
+    },
+    {
+      url: "https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?w=800&h=500&auto=compress",
+      title: "Swiss Alps",
+      location: "Switzerland"
+    },
+    {
+      url: "https://images.pexels.com/photos/2121121/pexels-photo-2121121.jpeg?w=800&h=500&auto=compress",
+      title: "Bali Rice Terraces",
+      location: "Bali, Indonesia"
+    },
+    {
+      url: "https://images.pexels.com/photos/1584047/pexels-photo-1584047.jpeg?w=800&h=500&auto=compress",
+      title: "Santorini Sunset",
+      location: "Santorini, Greece"
+    },
+    {
+      url: "https://images.pexels.com/photos/1285625/pexels-photo-1285625.jpeg?w=800&h=500&auto=compress",
+      title: "Colosseum",
+      location: "Rome, Italy"
+    },
+    {
+      url: "https://images.pexels.com/photos/1483053/pexels-photo-1483053.jpeg?w=800&h=500&auto=compress",
+      title: "Mount Fuji",
+      location: "Japan"
+    },
+    {
+      url: "https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?w=800&h=500&auto=compress",
+      title: "New York Skyline",
+      location: "New York, USA"
+    },
+    {
+      url: "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?w=800&h=500&auto=compress",
+      title: "London Bridge",
+      location: "London, UK"
+    },
+    {
+      url: "https://images.pexels.com/photos/356844/pexels-photo-356844.jpeg?w=800&h=500&auto=compress",
+      title: "Sydney Opera House",
+      location: "Sydney, Australia"
+    },
+    {
+      url: "https://images.pexels.com/photos/2082103/pexels-photo-2082103.jpeg?w=800&h=500&auto=compress",
+      title: "Machu Picchu",
+      location: "Peru"
+    },
+    {
+      url: "https://images.pexels.com/photos/3278215/pexels-photo-3278215.jpeg?w=800&h=500&auto=compress",
+      title: "Taj Mahal",
+      location: "Agra, India"
+    },
+    {
+      url: "https://images.pexels.com/photos/1964644/pexels-photo-1964644.jpeg?w=800&h=500&auto=compress",
+      title: "Great Wall of China",
+      location: "Beijing, China"
+    },
+    {
+      url: "https://images.pexels.com/photos/2859169/pexels-photo-2859169.jpeg?w=800&h=500&auto=compress",
+      title: "Cape Town Beach",
+      location: "Cape Town, South Africa"
+    },
+    {
+      url: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg?w=800&h=500&auto=compress",
+      title: "Rio de Janeiro",
+      location: "Rio, Brazil"
+    }
+  ];
+
+  // Load gallery on page load
+  function loadGallery() {
+    const galleryGrid = document.getElementById('galleryGrid');
+    if (!galleryGrid) return;
+    
+    galleryGrid.innerHTML = '';
+    
+    galleryImages.forEach((image, index) => {
+      const galleryItem = document.createElement('div');
+      galleryItem.className = 'gallery-item';
+      galleryItem.setAttribute('onclick', `openLightbox(${index})`);
+      
+      galleryItem.innerHTML = `
+        <img src="${image.url}" alt="${image.title}" loading="lazy" onerror="this.src='https://images.pexels.com/photos/3278215/pexels-photo-3278215.jpeg?w=800&h=500&auto=compress'">
+        <div class="overlay-icon">
+          <i class="fas fa-search-plus"></i> Click to view
+        </div>
+        <div class="caption">
+          <strong>${image.title}</strong>
+          <div class="location">
+            <i class="fas fa-map-marker-alt"></i> ${image.location}
+          </div>
+        </div>
+      `;
+      
+      galleryGrid.appendChild(galleryItem);
+    });
+  }
+
+  // Lightbox functions
+  function openLightbox(index) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    
+    lightbox.classList.add('active');
+    lightboxImg.src = galleryImages[index].url;
+    lightboxCaption.innerHTML = `<strong>${galleryImages[index].title}</strong><br><i class="fas fa-map-marker-alt"></i> ${galleryImages[index].location}`;
+  }
+  
+  function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    lightbox.classList.remove('active');
+  }
+  
+  // Close lightbox with ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    }
+  });
+
+  // Initialize gallery
+  loadGallery();
+</script>
+
+</body>
+</html>
